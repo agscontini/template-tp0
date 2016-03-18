@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.template.tp0;
 
 import org.junit.Test;
+import utils.Configuration;
 
 import java.util.List;
 import java.util.regex.Matcher;
@@ -11,7 +12,8 @@ import static org.junit.Assert.assertTrue;
 public class RegExGeneratorTest {
 
     private boolean validate(String regEx, int numberOfResults) {
-        RegExGenerator generator = new RegExGenerator();
+        Configuration.loadProperties();
+        RegExGenerator generator = new RegExGenerator(Configuration.maxStringRegexGenerator);
         List<String> results = generator.generate(regEx, numberOfResults);
         // force matching the beginning and the end of the strings
         Pattern pattern = Pattern.compile("^" + regEx + "$");
