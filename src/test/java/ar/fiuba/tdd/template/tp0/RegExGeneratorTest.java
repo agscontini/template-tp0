@@ -63,5 +63,28 @@ public class RegExGeneratorTest {
         assertTrue(validate("[abc]+", 1));
     }
 
-    // TODO: Add more tests!!!
+    @Test
+    public void testCharacterSetWithQuestionMarkQuantifier() {
+        assertTrue(validate("[abc43yf]?", 1));
+    }
+
+    @Test
+    public void testCharacterSetWithAsteriskQuantifier() {
+        assertTrue(validate("[ab43y]*", 1));
+    }
+
+    @Test
+    public void testCharacterSetsWithAllQuantifiers() {
+        assertTrue(validate("[abc]*[fgh]?[mno]+", 1));
+    }
+
+    @Test
+    public void testCharacterSetWithQuantifierAndSpecialCharacterBackSlash() {
+        assertTrue(validate("[a\\*bc]+", 1));
+    }
+
+    @Test
+    public void testWholeSetOfRules() {
+        assertTrue(validate("as.?m\\[[abc]+m*.*", 1));
+    }
 }
