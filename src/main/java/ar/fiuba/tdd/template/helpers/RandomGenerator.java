@@ -11,7 +11,11 @@ public class RandomGenerator {
 
     public static int getRandomNumber(Range range) {
         Random random = new Random();
-        return random.nextInt(range.getMax() - range.getMin()) + range.getMin();
+        int bound = range.getMax() - range.getMin();
+        if (bound == 0) {
+            return range.getMin();
+        }
+        return random.nextInt(bound + 1) + range.getMin();
     }
 
     public static String generateRandomSizeStringFromString(String values, Range sizeRange) {
@@ -24,7 +28,7 @@ public class RandomGenerator {
     }
 
     private static char generateRandomCharacterFromString(String value) {
-        int randomNumber = getRandomNumber(new Range(0, value.length()));
+        int randomNumber = getRandomNumber(new Range(0, value.length() - 1));
         return value.charAt(randomNumber);
     }
 
@@ -38,7 +42,7 @@ public class RandomGenerator {
     }
 
     private static char generateRandomCharacter() {
-        int asciiValue = RandomGenerator.getRandomNumber(new Range(0,256));
+        int asciiValue = RandomGenerator.getRandomNumber(new Range(0,255));
         return (char) asciiValue;
     }
 }

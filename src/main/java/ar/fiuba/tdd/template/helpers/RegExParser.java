@@ -6,6 +6,7 @@ import ar.fiuba.tdd.template.tp0.RegexRule;
 import utils.Configuration;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -21,19 +22,19 @@ public class RegExParser {
             if (i > 0 && isSpecialCharacter(character)) {
                 if (isBackSlash(regEx.charAt(i - 1))) {
                     regexRule = new RegexRule(String.valueOf(character), new Range(1, 1));
+                    i--;
                 } else {
-                    String strBeforeSpecialChar = regEx.substring(0, i - 1);
-                    String possibleValues = getSetOfPossibleValues(strBeforeSpecialChar);
+                    String possibleValues = getSetOfPossibleValues(regEx.substring(0, i));
                     i -= getDecreasingSize(possibleValues);
                     SpecialCharacter specialCharacter = new SpecialCharacter(character, maxRandomValue);
-                    String values = removeBackSlashes(possibleValues);
-                    regexRule = new RegexRule(values, specialCharacter.getRange());
+                    regexRule = new RegexRule(removeBackSlashes(possibleValues), specialCharacter.getRange());
                 }
             } else {
                 regexRule = new RegexRule(String.valueOf(character), new Range(1,1));
             }
             result.add(regexRule);
         }
+        Collections.reverse(result);
         return result;
     }
 
@@ -51,10 +52,13 @@ public class RegExParser {
     }
 
     private static String getSetOfPossibleValues(String strBeforeSpecialChar) {
+        if (strBeforeSpecialChar.length() == 0) {
+            return "";
+        }
         int lastPosition = strBeforeSpecialChar.length() - 1;
         char lastChar = strBeforeSpecialChar.charAt(lastPosition);
         if (isClosingSetOfValues(lastChar)) {
-            return strBeforeSpecialChar.substring(getLastOpeningSetOfValuesPosition(strBeforeSpecialChar) + 1, lastPosition - 1);
+            return strBeforeSpecialChar.substring(getLastOpeningSetOfValuesPosition(strBeforeSpecialChar) + 1, lastPosition);
         } else {
             return String.valueOf(lastChar);
         }
@@ -64,7 +68,7 @@ public class RegExParser {
     private static int getLastOpeningSetOfValuesPosition(String strBeforeSpecialChar) {
         int position = strBeforeSpecialChar.lastIndexOf('[');
         if (position > 0 && isBackSlash(strBeforeSpecialChar.charAt(position - 1))) {
-            return getLastOpeningSetOfValuesPosition(strBeforeSpecialChar.substring(0, position - 1));
+            return getLastOpeningSetOfValuesPosition(strBeforeSpecialChar.substring(0, position));
         } else {
             return position;
         }
