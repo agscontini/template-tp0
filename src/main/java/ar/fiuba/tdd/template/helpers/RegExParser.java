@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class RegExParser {
 
-    public static List<RegexRule> parseRegularExpression(String regEx) {
+    public static List<RegexRule> parseRegularExpression(String regEx, int maxRandomValue) {
         ArrayList<RegexRule> result = new ArrayList<>();
         for (int i = regEx.length() - 1 ; i >= 0 ; i--) {
             RegexRule regexRule;
@@ -25,7 +25,7 @@ public class RegExParser {
                     String strBeforeSpecialChar = regEx.substring(0, i - 1);
                     String possibleValues = getSetOfPossibleValues(strBeforeSpecialChar);
                     i -= getDecreasingSize(possibleValues);
-                    SpecialCharacter specialCharacter = new SpecialCharacter(character);
+                    SpecialCharacter specialCharacter = new SpecialCharacter(character, maxRandomValue);
                     String values = removeBackSlashes(possibleValues);
                     regexRule = new RegexRule(values, specialCharacter.getRange());
                 }
@@ -71,7 +71,7 @@ public class RegExParser {
     }
 
     private static boolean isSpecialCharacter(char character) {
-        return Configuration.specialCharacters.contains(String.valueOf(character));
+        return Configuration.getSpecialCharacters().contains(String.valueOf(character));
     }
 
     private static boolean isBackSlash(char character) {

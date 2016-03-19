@@ -12,24 +12,40 @@ public class Configuration {
 
     private static String configFile = "config/conf/config.cfg";
 
-    public static int maxRandomValue;
+    private static int maxRandomValue;
 
-    public static String specialCharacters;
+    private static String specialCharacters;
 
     public static void loadProperties() {
         Properties props = new Properties();
+        FileInputStream file = null;
         try {
-            FileInputStream file = new FileInputStream(configFile);
-            props.load(file);
-            file.close();
-        } catch (IOException e) {
+            file = new FileInputStream(configFile);
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                props.load(file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    file.close();
+                } catch (IOException | NullPointerException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
-
         String tempMaxRandomValue = props.getProperty("maxRandomValue");
         maxRandomValue = Integer.parseInt(tempMaxRandomValue);
         specialCharacters = props.getProperty("specialCharacters");
-        System.out.println("El archivo de configuracion se leyo correctamente");
+    }
+
+    public static int getMaxRandomValue() {
+        return maxRandomValue;
+    }
+
+    public static String getSpecialCharacters() {
+        return specialCharacters;
     }
 }

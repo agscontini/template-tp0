@@ -16,7 +16,7 @@ public class Main {
         String regExpression = args[0];
         String tempAmountRegExpression = args[1];
         int amountRegExpression = Integer.parseInt(tempAmountRegExpression);
-        RegExGenerator regExGenerator = new RegExGenerator(Configuration.maxRandomValue);
+        RegExGenerator regExGenerator = new RegExGenerator(Configuration.getMaxRandomValue());
         List<String> resultStringsFromRegex = regExGenerator.generate(regExpression, amountRegExpression);
         printResults(resultStringsFromRegex);
 

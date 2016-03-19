@@ -15,7 +15,7 @@ public class RegExGenerator {
     }
 
     public List<String> generate(String regEx, int numberOfResults) {
-        List<RegexRule> regexList = RegExParser.parseRegularExpression(regEx);
+        List<RegexRule> regexList = RegExParser.parseRegularExpression(regEx, this.maxLength);
         List<String> listStrings = new ArrayList<>();
         for (int i = 0; i < numberOfResults - 1 ; i++) {
             listStrings.add(generateMatchingRegexString(regexList));
@@ -27,7 +27,7 @@ public class RegExGenerator {
         StringBuilder result = new StringBuilder();
         for (RegexRule regexRule : regexList) {
             String possibleValue = regexRule.getPossibleValues();
-            if (possibleValue.equals(".")) {
+            if (".".equals(possibleValue)) {
                 result.append(RandomGenerator.generateRandomSizeString(regexRule.getRange()));
             } else {
                 result.append(RandomGenerator.generateRandomSizeStringFromString(regexRule.getPossibleValues(), regexRule.getRange()));

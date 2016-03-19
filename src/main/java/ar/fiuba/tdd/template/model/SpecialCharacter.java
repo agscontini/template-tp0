@@ -1,7 +1,5 @@
 package ar.fiuba.tdd.template.model;
 
-import utils.Configuration;
-
 /**
  * Created by agustin on 18/03/16.
  */
@@ -9,8 +7,11 @@ public class SpecialCharacter {
 
     private char specialCharacter;
 
-    public SpecialCharacter(char specialCharacter) {
+    private int maxRandomValue;
+
+    public SpecialCharacter(char specialCharacter, int maxRandomValue) {
         this.specialCharacter = specialCharacter;
+        this.maxRandomValue = maxRandomValue;
     }
 
     public Range getRange() {
@@ -18,9 +19,9 @@ public class SpecialCharacter {
             case '?':
                 return new Range(0,1);
             case '+':
-                return new Range(1, Configuration.maxRandomValue);
+                return new Range(1, maxRandomValue);
             case '*':
-                return new Range(0,Configuration.maxRandomValue);
+                return new Range(0, maxRandomValue);
             case ']':
                 return new Range(1,1);
             default:
