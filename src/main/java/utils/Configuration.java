@@ -14,7 +14,7 @@ public class Configuration {
 
     public static int maxRandomValue;
 
-    public static int maxStringRegexGenerator;
+    public static String specialCharacters;
 
     public static void loadProperties() {
         Properties props = new Properties();
@@ -29,8 +29,7 @@ public class Configuration {
 
         String tempMaxRandomValue = props.getProperty("maxRandomValue");
         maxRandomValue = Integer.parseInt(tempMaxRandomValue);
-        String tempMaxStringRegexGenerator = props.getProperty("maxStringRegexGenerator");
-        maxStringRegexGenerator = Integer.parseInt(tempMaxStringRegexGenerator);
+        specialCharacters = props.getProperty("specialCharacters");
         System.out.println("El archivo de configuracion se leyo correctamente");
     }
 }

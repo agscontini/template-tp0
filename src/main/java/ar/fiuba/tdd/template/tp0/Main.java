@@ -16,15 +16,15 @@ public class Main {
         String regExpression = args[0];
         String tempAmountRegExpression = args[1];
         int amountRegExpression = Integer.parseInt(tempAmountRegExpression);
-        RegExGenerator regExGenerator = new RegExGenerator(Configuration.maxStringRegexGenerator);
+        RegExGenerator regExGenerator = new RegExGenerator(Configuration.maxRandomValue);
         List<String> resultStringsFromRegex = regExGenerator.generate(regExpression, amountRegExpression);
         printResults(resultStringsFromRegex);
 
     }
 
     private static void printResults(List<String> resultStringsFromRegex) {
-        for (String element : resultStringsFromRegex) {
-            System.out.println("String: " + element);
+        for (String result : resultStringsFromRegex) {
+            System.out.println("String: " + result);
         }
     }
 }
